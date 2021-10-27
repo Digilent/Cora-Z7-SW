@@ -118,7 +118,7 @@ float Xadc_RawToVoltage(u16 Data, u8 Channel) {
 	case 3: // VP/VN (Cora Dedicated Analog Input)
 	case 16: // AUX0 (Cora A8/A9 Diff. Analog Input)
 	case 24: // AUX8 (Cora A10/A11 Diff. Analog Input)
-	case 28: Scale = 1.0; break; // AUX12 (Cora A6/A7 Diff. Analog Input)
+	case 28: Scale = 0.5; break; // AUX12 (Cora A6/A7 Diff. Analog Input)
 	case 17: // AUX1 (Cora A0 Single-Ended Analog Input)
 	case 21: // AUX5 (Cora A4 Single-Ended Analog Input)
 	case 22: // AUX6 (Cora A2 Single-Ended Analog Input)
@@ -132,7 +132,7 @@ float Xadc_RawToVoltage(u16 Data, u8 Channel) {
 		Data = ~Data + 1;
 	} else
 		FloatData = Scale;
-	FloatData *= (float)Data / (float)0xFFFF;
+	FloatData *= (float)Data / (float)0x7FFF;
 	return FloatData;
 }
 
