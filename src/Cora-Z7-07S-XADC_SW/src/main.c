@@ -66,8 +66,8 @@ void Xadc_Init(XSysMon *InstancePtr, u32 DeviceId) {
 	XSysMon_SetAlarmEnables(InstancePtr, 0x0);
 	// Set averaging for all channels to 16 samples
 	XSysMon_SetAvg(InstancePtr, XSM_AVG_16_SAMPLES);
-	// Set differential input mode for all channels
-	XSysMon_SetSeqInputMode(InstancePtr, XADC_SEQ_CHANNELS);
+	// Set differential input mode for channels VP_VN, AUX0, AUX8, AUX12 and unipolar input mode for the rest
+	XSysMon_SetSeqInputMode(InstancePtr, XSM_SEQ_CH_VPVN | XSM_SEQ_CH_AUX00 | XSM_SEQ_CH_AUX08 | XSM_SEQ_CH_AUX12);
 	// Set 6ADCCLK acquisition time in all channels
 	XSysMon_SetSeqAcqTime(InstancePtr, XADC_SEQ_CHANNELS);
 	// Disable averaging in all channels
@@ -113,26 +113,30 @@ u32 Xadc_ReadData (XSysMon *InstancePtr, u16 RawData[32])
 float Xadc_RawToVoltage(u16 Data, u8 Channel) {
 	float FloatData;
 	float Scale;
+	int Sign;
 
 	switch (Channel) {
 	case 3: // VP/VN (Cora Dedicated Analog Input)
 	case 16: // AUX0 (Cora A8/A9 Diff. Analog Input)
 	case 24: // AUX8 (Cora A10/A11 Diff. Analog Input)
-	case 28: Scale = 0.5; break; // AUX12 (Cora A6/A7 Diff. Analog Input)
+	case 28: Scale = 0.5; Sign = 1; break; // AUX12 (Cora A6/A7 Diff. Analog Input)
 	case 17: // AUX1 (Cora A0 Single-Ended Analog Input)
 	case 21: // AUX5 (Cora A4 Single-Ended Analog Input)
 	case 22: // AUX6 (Cora A2 Single-Ended Analog Input)
 	case 25: // AUX9 (Cora A1 Single-Ended Analog Input)
 	case 29: // AUX13 (Cora A5 Single-Ended Analog Input)
-	case 31: Scale = 3.3; break; // AUX15 (Cora A3 Single-Ended Analog Input)
+	case 31: Scale = 3.3; Sign = 0; break; // AUX15 (Cora A3 Single-Ended Analog Input)
 	default: Scale = 0.0;
 	}
-	if (Test_Bit(Data, 15)) {
+	if (Sign && Test_Bit(Data, 15)) {
 		FloatData = -Scale;
 		Data = ~Data + 1;
 	} else
 		FloatData = Scale;
-	FloatData *= (float)Data / (float)0x7FFF;
+	if (Sign)
+		FloatData *= (float)Data / (float)0x7FF0;
+	else
+		FloatData *= (float)Data / (float)0xFFF0;
 	return FloatData;
 }
 
