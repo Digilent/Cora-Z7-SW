@@ -21,7 +21,7 @@ set sysproj "Cora-Z7-10-XADC_SW_system"
 
 # Handle dependent variables
 if {$lang == "c"} {
-	set template "Empty Application(C)"
+	set template "Empty Application"
 } elseif {$lang == "c++"} {
 	set template "Empty Application (C++)"
 } else {
