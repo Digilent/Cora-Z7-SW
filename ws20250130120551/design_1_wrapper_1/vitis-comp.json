@@ -1,0 +1,51 @@
+{
+  "name": "design_1_wrapper_1",
+  "type": "PLATFORM",
+  "configuration": {
+    "description": "design_1_wrapper_1",
+    "xsa": "D:\\PrjMig-Vitis_2024.1\\repos\\cora-z7\\sw\\src\\design_1_wrapper_1\\design_1_wrapper.xsa",
+    "xsaPathInPlatform": "design_1_wrapper_1\\hw\\design_1_wrapper.xsa",
+    "emulationXsa": "",
+    "emulationXsaPathInPlatform": "",
+    "isCustomFSBL": false,
+    "fsblPath": "",
+    "pmufwElf": "",
+    "flow": "EMBEDDED",
+    "processorsMap": {
+      "ps7_cortexa9_0": "ps7_cortexa9"
+    },
+    "supportedFamily": "zynq",
+    "componentType": "PLATFORM",
+    "domains": [
+      {
+        "name": "zynq_fsbl",
+        "displayName": "zynq_fsbl",
+        "processor": "ps7_cortexa9_0",
+        "cpuType": "cortex-a9",
+        "cpuInstance": "ps7_cortexa9_0",
+        "os": "standalone",
+        "appTemplate": "zynq_fsbl",
+        "isBootDomain": true,
+        "qemuData": "D:\\PrjMig-Vitis_2024.1\\repos\\cora-z7\\sw\\ws20250130120551\\design_1_wrapper_1\\resources\\zynq_fsbl\\qemu",
+        "qemuArgsFile": "D:\\PrjMig-Vitis_2024.1\\repos\\cora-z7\\sw\\ws20250130120551\\design_1_wrapper_1\\resources\\zynq_fsbl\\qemu\\qemu_args.txt",
+        "pmcQemuArgsFile": "",
+        "isBSPGenReq": false
+      },
+      {
+        "name": "domain_ps7_cortexa9_0",
+        "displayName": "domain_ps7_cortexa9_0",
+        "processor": "ps7_cortexa9_0",
+        "cpuType": "cortex-a9",
+        "cpuInstance": "ps7_cortexa9_0",
+        "os": "standalone",
+        "appTemplate": "empty_application",
+        "isBootDomain": false,
+        "qemuData": "D:\\PrjMig-Vitis_2024.1\\repos\\cora-z7\\sw\\ws20250130120551\\design_1_wrapper_1\\resources\\domain_ps7_cortexa9_0\\qemu",
+        "qemuArgsFile": "D:\\PrjMig-Vitis_2024.1\\repos\\cora-z7\\sw\\ws20250130120551\\design_1_wrapper_1\\resources\\domain_ps7_cortexa9_0\\qemu\\qemu_args.txt",
+        "pmcQemuArgsFile": "",
+        "isBSPGenReq": false
+      }
+    ],
+    "emptyToolchainConfiguration": []
+  }
+}
