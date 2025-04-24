@@ -6,6 +6,8 @@
  */
 
 #include "PWM.h"
+//#include "../../design_1_wrapper_1/hw/sdt/drivers/PWM_v1_0/src/PWM.h"
+
 #include "xsysmon.h"
 #include "xparameters.h"
 #include "sleep.h"
@@ -14,11 +16,11 @@
 #include "xil_types.h"
 #include "debounce.h"
 
-#define RGBLED_BASEADDR XPAR_PWM_0_PWM_AXI_BASEADDR
+#define RGBLED_BASEADDR XPAR_PWM_0_BASEADDR /*XPAR_PWM_0_PWM_AXI_BASEADDR*/
 #define LED_ON_DUTY 0x3FFF
 #define LED_OFF_DUTY 0x3000
-#define XADC_DEVICE_ID XPAR_XADC_WIZ_0_DEVICE_ID
-#define BTN_DEVICE_ID XPAR_AXI_GPIO_0_DEVICE_ID
+#define XADC_DEVICE_ID XPAR_XADC_WIZ_0_BASEADDR /*XPAR_XADC_WIZ_0_DEVICE_ID*/
+#define BTN_DEVICE_ID XPAR_AXI_GPIO_0_BASEADDR /*XPAR_AXI_GPIO_0_DEVICE_ID*/
 // Channels 0, 1, 5, 6, 8, 9, 12, 13, 15, VPVN are available
 // Channels 0, 8, 12 are differential 1.0V max
 // Channels 1, 5, 6, 9, 13, 15 are single-ended 3.3V max
@@ -45,14 +47,22 @@ const char *Channel_Names[32] = {
 #define Test_Bit(VEC,BIT) ((VEC&(1<<BIT))!=0)
 
 void RGBLED_SetColor(u32 base_address, u16 r, u16 g, u16 b) {
-	PWM_Set_Duty(RGBLED_BASEADDR, b, 0);
+	/*PWM_Set_Duty(RGBLED_BASEADDR, b, 0);
 	PWM_Set_Duty(RGBLED_BASEADDR, g, 1);
-	PWM_Set_Duty(RGBLED_BASEADDR, r, 2);
+	PWM_Set_Duty(RGBLED_BASEADDR, r, 2);*/
+    //PWM_Set_Duty(base_address, b, 0);
+	//PWM_Set_Duty(base_address, g, 1);
+	//PWM_Set_Duty(base_address, r, 2);
+    Xil_Out32(base_address + PWM_AXI_DUTY_REG_OFFSET + (4*0), b);
+    Xil_Out32(base_address + PWM_AXI_DUTY_REG_OFFSET + (4*1), g);
+    Xil_Out32(base_address + PWM_AXI_DUTY_REG_OFFSET + (4*2), r);
 }
 void RGBLED_Init(u32 base_address) {
-	PWM_Set_Period(base_address, 0xffff);
+	//PWM_Set_Period(base_address, 0xffff);
+    Xil_Out32(base_address + PWM_AXI_PERIOD_REG_OFFSET, 0xffff);
 	RGBLED_SetColor(base_address, 0, 0, 0);
-	PWM_Enable(base_address);
+	//PWM_Enable(base_address);
+    Xil_Out32(base_address + PWM_AXI_CTRL_REG_OFFSET, 1);
 }
 
 void Xadc_Init(XSysMon *InstancePtr, u32 DeviceId) {
@@ -111,9 +121,9 @@ u32 Xadc_ReadData (XSysMon *InstancePtr, u16 RawData[32])
 }
 
 float Xadc_RawToVoltage(u16 Data, u8 Channel) {
-	float FloatData;
-	float Scale;
-	int Sign;
+	float FloatData = 0.0f;
+	float Scale = 0.0f;
+	int Sign = 0;
 
 	switch (Channel) {
 	case 3: // VP/VN (Cora Dedicated Analog Input)
