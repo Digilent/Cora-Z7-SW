@@ -28,6 +28,11 @@ set(USER_UNDEFINED_SYMBOLS
 set(USER_INCLUDE_DIRECTORIES
 D:/PrjMig-Vitis_2024.1/repos/cora-z7/sw/ws20250130120551/design_1_wrapper_1/hw/sdt/drivers/PWM_v1_0/src
 )
+set(USER_COMPILE_SOURCES
+"debounce.c"
+"main.c"
+"platform.c"
+)
 
 # -----------------------------------------
 

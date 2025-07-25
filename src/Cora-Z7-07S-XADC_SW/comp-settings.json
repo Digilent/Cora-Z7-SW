@@ -9,6 +9,9 @@
 	"USER_INCLUDE_DIRECTORIES" : [
 		"D:/PrjMig-Vitis_2024.1/repos/cora-z7/sw/ws20250130120551/design_1_wrapper_1/hw/sdt/drivers/PWM_v1_0/src"
 	],
+	"USER_COMPILE_SOURCES" : [
+		"\"debounce.c\""
+	],
 	"USER_COMPILE_WARNINGS_ALL" : [
 		"-Wall"
 	],
@@ -47,5 +50,5 @@
 	"USER_LINK_OTHER_FLAGS" : [
 		"\"-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none\""
 	],
-	"Cora-Z7-07S-XADC_SW" : "src\\design_1_wrapper_1\\design_1_wrapper_1.xsa"
+	"Cora-Z7-07S-XADC_SW" : "src\\design_1_wrapper_\\design_1_wrapper_.xsa"
 }
