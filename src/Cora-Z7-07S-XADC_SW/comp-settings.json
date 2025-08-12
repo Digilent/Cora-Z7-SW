@@ -50,5 +50,5 @@
 	"USER_LINK_OTHER_FLAGS" : [
 		"\"-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none\""
 	],
-	"Cora-Z7-07S-XADC_SW" : "src\\design_1_wrapper_\\design_1_wrapper_.xsa"
+	"Cora-Z7-07S-XADC_SW" : "src\\design_1_wrapper_1\\design_1_wrapper_1.xsa"
 }
